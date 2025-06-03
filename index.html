@@ -3,33 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Analyzer</title>
+    <title>Анализ игры</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Анализ игры</h1>
-        <div class="stats">
-            <div id="average1">Средний кф. Игрок 1: 0.00</div>
-            <div id="average2">Средний кф. Игрок 2: 0.00</div>
-            <div id="winner">Победитель: не определён</div>
-            <div id="confidence">Уверенность прогноза: 0%</div>
-            <div id="totalPrediction" class="prediction">Рекомендуется ТБ 20.5</div>
-            <div id="smallestPoints">Очки более слабого игрока: 0.00</div>
-            <div class="ai-summary">
-                <strong>AI Анализ:</strong>
-                <div id="momentSummary">Камбэков: 0, Потерь преимущества: 0, Смен лидерства: 0</div>
-                <div id="aiConclusion">Игра сбалансирована, победитель неочевиден.</div>
+        <div class="stats" id="stats">
+            <h3>Средний кф. Игрок 1: <span id="avg1">0.00</span></h3>
+            <h3>Средний кф. Игрок 2: <span id="avg2">0.00</span></h3>
+            <h3>Победитель: <span id="winner">не определён</span></h3>
+            <h3>Уверенность прогноза: <span id="confidence">0%</span></h3>
+            <div id="recommendation" class="recommend"></div>
+            <div>Очки более слабого игрока: <span id="smallestPoints">0.00</span></div>
+            <div class="ai-analysis">
+                <strong>AI Анализ:</strong><br>
+                Камбэков: <span id="comebacks">0</span>,
+                Потерь преимущества: <span id="advLosses">0</span>,
+                Смен лидерства: <span id="leadSwitches">0</span>
+                <div id="aiConclusion"></div>
             </div>
         </div>
-        <div class="inputs">
-            <h2>Введите коэффициенты (5–10 гейм)</h2>
-            <div id="inputRows"></div>
-        </div>
-        <button id="clearButton">Очистить данные</button>
+
+        <h2>Введите коэффициенты (5–10 гейм)</h2>
+        <div id="inputs"></div>
+        <button onclick="clearData()">Очистить данные</button>
     </div>
 
     <script src="script.js"></script>
 </body>
 </html>
-
