@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Анализ игры</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <section class="summary">
+      <h2>Средний коэффициент Игрока 1: <span id="avgPlayer1">0.00</span></h2>
+      <h2>Средний коэффициент Игрока 2: <span id="avgPlayer2">0.00</span></h2>
+      <h3>Победитель: <span id="winner">не определён</span></h3>
+      <p>Уверенность прогноза: <span id="confidence">0%</span></p>
+      <p id="totalPrediction">Рекомендуется ТБ 20.5</p>
+      <p>Очки более слабого игрока: <span id="smallestPoints">0.00</span></p>
+      <p>AI Анализ: <span id="aiConclusion">Игра сбалансирована, победитель неочевиден.</span></p>
+    </section>
+
+    <section class="inputs">
+      <h3>Введите коэффициенты (5–10 гейм)</h3>
+      <div id="gameInputs">
+        <!-- Здесь будут динамически добавлены поля ввода для каждого гейма -->
+      </div>
+    </section>
+
+    <button id="clearButton">Очистить данные</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
