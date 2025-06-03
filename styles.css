@@ -1,0 +1,54 @@
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: sans-serif;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+
+.summary {
+  background-color: #333;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.inputs {
+  background-color: #222;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.inputs h3 {
+  margin-top: 0;
+}
+
+.game-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.game-row label {
+  width: 80px;
+}
+
+.game-row input {
+  width: 100px;
+  margin-right: 10px;
+  padding: 5px;
+}
+
+#clearButton {
+  background-color: red;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
