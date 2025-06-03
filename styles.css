@@ -1,14 +1,19 @@
 body {
-    margin: 0;
-    font-family: sans-serif;
     background-color: #000;
-    color: white;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
-    max-width: 500px;
+    max-width: 700px;
     margin: auto;
-    padding: 10px;
+    padding: 15px;
+}
+
+h1, h2 {
+    text-align: center;
 }
 
 .stats {
@@ -16,91 +21,73 @@ body {
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 15px;
-    overflow-wrap: break-word;
-    position: sticky;
-    top: 0;
-    z-index: 10;
 }
 
-.recommend {
-    font-size: 18px;
-    margin: 10px 0;
+.prediction {
+    font-size: 1.2em;
+    font-weight: bold;
     padding: 8px;
     border-radius: 8px;
-    background-color: #444;
+    background-color: rgba(128, 128, 128, 0.2);
     text-align: center;
+    margin-top: 10px;
 }
 
-.recommend.green {
-    color: lightgreen;
-    background-color: rgba(0, 128, 0, 0.2);
-}
-
-.recommend.red {
-    color: salmon;
-    background-color: rgba(128, 0, 0, 0.2);
-}
-
-.ai-analysis {
-    margin-top: 5px;
-    font-size: 14px;
+.ai-summary {
+    margin-top: 10px;
     color: orange;
 }
 
-h2 {
-    font-size: 20px;
-    text-align: center;
-    margin: 15px 0;
+.inputs {
+    background-color: rgba(128, 128, 128, 0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
 }
 
-.row {
+.input-row {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 6px;
-    gap: 5px;
-    background-color: rgba(255, 255, 0, 0.05);
-    padding: 4px;
-    border-radius: 4px;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
 }
 
-input {
+.input-row label {
+    min-width: 60px;
+    margin-right: 5px;
+    color: white;
+}
+
+.input-row input {
     width: 80px;
-    padding: 6px;
-    font-size: 16px;
-    border-radius: 6px;
+    padding: 5px;
+    margin: 3px;
+    border-radius: 4px;
     border: none;
+    text-align: center;
+}
+
+.input-row.comment {
+    background-color: rgba(255, 255, 0, 0.2);
+    padding: 4px;
+    border-radius: 5px;
+    font-size: 0.9em;
 }
 
 button {
     width: 100%;
     padding: 10px;
-    font-size: 16px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 8px;
     background-color: red;
     color: white;
+    font-size: 1em;
+    border: none;
+    border-radius: 10px;
 }
 
 @media (max-width: 500px) {
-    input {
-        width: 70px;
-        font-size: 14px;
-    }
-
-    .row {
+    .input-row {
         flex-direction: column;
         align-items: flex-start;
     }
-
-    .recommend {
-        font-size: 16px;
-    }
-
-    .stats {
-        font-size: 14px;
-    }
 }
-
-
