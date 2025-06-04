@@ -72,8 +72,10 @@ function onInput(e) {
     if (value.length >= 4 && nextIndex < 12) {
         const nextInput = document.querySelector(`input[data-row="${Math.floor(nextIndex / 2)}"][data-col="${nextIndex % 2}"]`);
         if (nextInput) nextInput.focus();
-    } else if (nextIndex >= 12 && value.length >= 4) {
-    e.target.blur(); // Скрыть клавиатуру только при полном вводе
+    } else if (nextIndex >= 12) {
+    if (value.length === 4) {
+        e.target.blur();
+    }
 }
 
     calculate();
