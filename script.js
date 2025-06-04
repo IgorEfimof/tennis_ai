@@ -20,6 +20,9 @@ function formatInput(value) {
 
 function buildInputs() {
     for (let i = 0; i < 6; i++) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "input-wrapper";
+
         const row = document.createElement("div");
         row.className = "input-row";
         row.id = `row-${i}`;
@@ -47,12 +50,13 @@ function buildInputs() {
         row.appendChild(input2);
 
         const comment = document.createElement("div");
-        comment.className = "input-row comment";
+        comment.className = "comment";
         comment.style.display = "none";
         comment.id = `comment-${i}`;
-        row.appendChild(comment);
 
-        inputRowsElem.appendChild(row);
+        wrapper.appendChild(row);
+        wrapper.appendChild(comment);
+        inputRowsElem.appendChild(wrapper);
     }
 }
 
@@ -193,4 +197,5 @@ document.getElementById("clearButton").addEventListener("click", () => {
 });
 
 buildInputs();
+
 
