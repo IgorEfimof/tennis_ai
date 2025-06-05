@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Analyzer</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Analyzer</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>Анализ игры</h1>
-        <div class="stats">
-            <div id="average1">Средний кф. Игрок 1: 0.00</div>
-            <div id="average2">Средний кф. Игрок 2: 0.00</div>
-            <div id="winner">Победитель: не определён</div>
-            <div id="confidence">Уверенность прогноза: 0%</div>
-            <div id="totalPrediction" class="prediction">Рекомендуется ТБ 20.5</div>
-            <div id="smallestPoints">Очки более слабого игрока: 0.00</div>
-            <div class="ai-summary">
-                <strong>AI Анализ:</strong>
-                <div id="momentSummary">Камбэков: 0, Потерь преимущества: 0, Смен лидерства: 0</div>
-                <div id="aiConclusion">Игра сбалансирована, победитель неочевиден.</div>
-            </div>
-        </div>
-        <div class="inputs">
-            <h2>Введите коэффициенты (5–10 гейм)</h2>
-            <div id="inputRows"></div>
-        </div>
-        <button id="clearButton">Очистить данные</button>
+  <div class="container">
+    <h1>Анализ игры</h1>
+    <div class="stats">
+      <div id="average1">Средний кф. Игрок 1: 0.00</div>
+      <div id="average2">Средний кф. Игрок 2: 0.00</div>
+      <div id="winner">Победитель: не определён</div>
+      <div id="confidence">Уверенность прогноза: 0%</div>
+      <div id="totalPrediction" class="prediction">Рекомендуется ТБ 20.5</div>
+      <div id="smallestPoints">Очки более слабого игрока: 0.00</div>
+      <div class="ai-summary">
+        <strong>AI Анализ:</strong>
+        <div id="momentSummary">Камбэков: 0, Потерь преимущества: 0, Смен лидерства: 0</div>
+        <div id="aiConclusion">Игра сбалансирована, победитель неочевиден.</div>
+      </div>
     </div>
 
-    <script src="script.js"></script>
+    <div class="inputs">
+      <h2>Введите коэффициенты (5–10 гейм)</h2>
+      <div id="inputRows"></div>
+    </div>
+
+    <button id="clearButton">Очистить данные</button>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
+
 
