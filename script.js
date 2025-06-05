@@ -27,15 +27,15 @@ function buildInputs() {
         row.className = "input-row";
         row.id = `row-${i}`;
 
-        const label = document.createElement("label");
-        label.textContent = `Гейм ${i + 5}`;
-        label.className = "row-label"; // <- можно добавить спец. класс для стиля
-
         const input1 = document.createElement("input");
         input1.placeholder = "Игрок 1";
         input1.inputMode = "decimal";
         input1.dataset.row = i;
         input1.dataset.col = 0;
+
+        const label = document.createElement("label");
+        label.textContent = `Гейм ${i + 5}`;
+        label.className = "game-label";
 
         const input2 = document.createElement("input");
         input2.placeholder = "Игрок 2";
@@ -46,8 +46,8 @@ function buildInputs() {
         input1.addEventListener("input", onInput);
         input2.addEventListener("input", onInput);
 
-        row.appendChild(label);
         row.appendChild(input1);
+        row.appendChild(label);
         row.appendChild(input2);
 
         const comment = document.createElement("div");
