@@ -85,6 +85,7 @@ button {
     border-radius: 10px;
 }
 
+/* 🔧 Адаптация под узкий экран: Игрок 1 / Игрок 2 в 2 колонки */
 @media (max-width: 500px) {
     .input-row {
         display: grid;
@@ -100,6 +101,8 @@ button {
 
     .input-row input {
         width: 100%;
+        margin: 0;
     }
 }
+
 
