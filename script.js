@@ -29,6 +29,7 @@ function buildInputs() {
 
         const label = document.createElement("label");
         label.textContent = `Гейм ${i + 5}`;
+        label.className = "row-label"; // <- можно добавить спец. класс для стиля
 
         const input1 = document.createElement("input");
         input1.placeholder = "Игрок 1";
@@ -50,7 +51,7 @@ function buildInputs() {
         row.appendChild(input2);
 
         const comment = document.createElement("div");
-        comment.className = "comment";
+        comment.className = "input-row comment";
         comment.style.display = "none";
         comment.id = `comment-${i}`;
 
