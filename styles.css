@@ -105,3 +105,46 @@ button {
         margin: 0;
     }
 }
+/* --- Compact input row layout --- */
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 6px;
+}
+
+.input-row input {
+    width: 100%;
+    padding: 4px 6px;
+    font-size: 0.9em;
+    border-radius: 4px;
+    border: none;
+    text-align: center;
+}
+
+.game-label {
+    font-size: 0.85em;
+    text-align: center;
+    color: #ccc;
+    white-space: nowrap;
+    padding: 2px 4px;
+}
+
+/* Адаптация для маленьких экранов */
+@media (max-width: 500px) {
+    .input-row {
+        grid-template-columns: 1fr auto 1fr;
+        gap: 4px;
+    }
+
+    .input-row input {
+        font-size: 0.8em;
+        padding: 3px;
+    }
+
+    .game-label {
+        font-size: 0.75em;
+    }
+}
+
