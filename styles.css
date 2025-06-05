@@ -87,7 +87,19 @@ button {
 
 @media (max-width: 500px) {
     .input-row {
-        flex-direction: column;
-        align-items: flex-start;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        align-items: center;
+    }
+
+    .input-row label {
+        grid-column: span 2;
+        margin-bottom: 4px;
+    }
+
+    .input-row input {
+        width: 100%;
     }
 }
+
