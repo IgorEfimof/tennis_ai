@@ -86,15 +86,16 @@ button {
 }
 
 /* 🔧 Адаптация под узкий экран: Игрок 1 / Игрок 2 в 2 колонки */
-@media (max-width: 500px) {
+@media (max-width: 700px) {
     .input-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 6px;
+        gap: 8px;
         align-items: center;
     }
 
-    .input-row label {
+    .input-row label,
+    .row-label {
         grid-column: span 2;
         margin-bottom: 4px;
     }
@@ -104,5 +105,3 @@ button {
         margin: 0;
     }
 }
-
-
