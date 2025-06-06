@@ -74,10 +74,10 @@ function onInput(e) {
         const nextInput = document.querySelector(`input[data-row="${Math.floor(nextIndex / 2)}"][data-col="${nextIndex % 2}"]`);
         if (nextInput) nextInput.focus();
     } else if (nextIndex >= 12) {
-    if (value.length === 4) {
-        e.target.blur();
+        if (value.length === 4) {
+            e.target.blur();
+        }
     }
-}
 
     calculate();
 }
@@ -102,12 +102,6 @@ function calculate() {
     average1Elem.textContent = `Средний кф. Игрок 1: ${avg1.toFixed(2)}`;
     average2Elem.textContent = `Средний кф. Игрок 2: ${avg2.toFixed(2)}`;
 
-    const diff = Math.abs(avg1 - avg2);
-    const confidence = Math.min(1.0, diff / 0.5);
-    confidenceElem.textContent = `Уверенность прогноза: ${Math.round(confidence * 100)}%`;
-    totalPredictionElem.textContent = diff <= 0.3 ? "Рекомендуется ТБ 20.5" : "Рекомендуется ТМ 20.5";
-    totalPredictionElem.style.color = diff <= 0.3 ? "green" : "red";
-
     const total = avg1 + avg2;
     const p1 = total ? (avg1 / total) * 21 : 0;
     const p2 = total ? (avg2 / total) * 21 : 0;
@@ -115,6 +109,47 @@ function calculate() {
 
     detectKeyMoments();
     applyAIScoring(avg1, avg2);
+    calculateConfidence(avg1, avg2);
+}
+
+function getVolatility(playerIndex) {
+    let volatility = 0;
+    for (let i = 1; i < 6; i++) {
+        const prev = parseFloat(coefficients[i - 1][playerIndex]) || 0;
+        const curr = parseFloat(coefficients[i][playerIndex]) || 0;
+        volatility += Math.abs(curr - prev);
+    }
+    return volatility / 5;
+}
+
+function calculateConfidence(avg1, avg2) {
+    const diff = Math.abs(avg1 - avg2);
+    const baseConfidence = Math.min(1.0, diff / 0.5);
+
+    const vol1 = getVolatility(0);
+    const vol2 = getVolatility(1);
+    const avgVolatility = (vol1 + vol2) / 2;
+    const stabilityFactor = Math.max(0.0, 1.0 - avgVolatility);
+
+    let switches = 0;
+    let previousLeader = null;
+    for (let i = 1; i < 6; i++) {
+        const d1 = parseFloat(coefficients[i][0]) || 0;
+        const d2 = parseFloat(coefficients[i][1]) || 0;
+        const currLeader = d1 < d2 ? 1 : d1 > d2 ? 2 : 0;
+        if (previousLeader !== null && currLeader !== 0 && previousLeader !== currLeader) {
+            switches++;
+        }
+        if (currLeader !== 0) previousLeader = currLeader;
+    }
+    const switchPenalty = Math.min(0.3, switches * 0.1);
+
+    let confidence = baseConfidence * stabilityFactor - switchPenalty;
+    confidence = Math.max(0, Math.min(1, confidence));
+    confidenceElem.textContent = `Уверенность прогноза: ${Math.round(confidence * 100)}%`;
+
+    totalPredictionElem.textContent = diff <= 0.3 ? "Рекомендуется ТБ 20.5" : "Рекомендуется ТМ 20.5";
+    totalPredictionElem.style.color = diff <= 0.3 ? "green" : "red";
 }
 
 function detectKeyMoments() {
@@ -141,7 +176,7 @@ function detectKeyMoments() {
             msg = diffCurr > 0 ? "Игрок 1 делает камбэк!" : "Игрок 2 делает камбэк!";
             comebacks++;
         } else if (Math.abs(curr1 - prev1) > 0.4 || Math.abs(curr2 - prev2) > 0.4) {
-            msg = curr1 > prev1 ? "Игрок 1 теряет преимущество!" : "Игрок 2 теряет преимущество!";
+            msg = curr1 < prev1 ? "Игрок 1 теряет преимущество!" : "Игрок 2 теряет преимущество!";
             losses++;
         }
 
@@ -200,5 +235,6 @@ document.getElementById("clearButton").addEventListener("click", () => {
 });
 
 buildInputs();
+
 
 
