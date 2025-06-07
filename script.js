@@ -176,9 +176,9 @@ function detectKeyMoments() {
             msg = diffCurr > 0 ? "Игрок 1 делает камбэк!" : "Игрок 2 делает камбэк!";
             comebacks++;
         } else if (Math.abs(curr1 - prev1) > 0.4 || Math.abs(curr2 - prev2) > 0.4) {
-            msg = curr1 < prev1 ? "Игрок 1 теряет преимущество!" : "Игрок 2 теряет преимущество!";
-            losses++;
-        }
+    msg = curr1 > prev1 ? "Игрок 1 теряет преимущество!" : "Игрок 2 теряет преимущество!";
+    losses++;
+}
 
         const comment = document.getElementById(`comment-${i}`);
         if (msg) {
