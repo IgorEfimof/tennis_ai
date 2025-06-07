@@ -214,9 +214,9 @@ function applyAIScoring(avg1, avg2) {
     const score1 = avg1 * 0.5 + trend1 * 0.3 + delta1 * 0.2;
     const score2 = avg2 * 0.5 + trend2 * 0.3 + delta2 * 0.2;
 
-    if (score1 < score2) {
+    if (score1 > score2) {
         winnerElem.textContent = "Победитель: Игрок 1";
-    } else if (score2 < score1) {
+    } else if (score2 > score1) {
         winnerElem.textContent = "Победитель: Игрок 2";
     } else {
         winnerElem.textContent = "Победитель: не определён";
@@ -235,6 +235,3 @@ document.getElementById("clearButton").addEventListener("click", () => {
 });
 
 buildInputs();
-
-
-
