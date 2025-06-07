@@ -35,6 +35,7 @@ function buildInputs() {
     input1.inputMode = "decimal";
     input1.dataset.row = i;
     input1.dataset.col = 0;
+    input1.maxLength = 4;
 
     const label = document.createElement("label");
     label.textContent = `Гейм ${i + 5}`;
@@ -45,6 +46,7 @@ function buildInputs() {
     input2.inputMode = "decimal";
     input2.dataset.row = i;
     input2.dataset.col = 1;
+    input2.maxLength = 4;
 
     input1.addEventListener("input", onInput);
     input2.addEventListener("input", onInput);
@@ -72,6 +74,17 @@ function onInput(e) {
   coefficients[row][col] = value;
 
   calculate();
+
+  if (value.length >= 3) {
+    // Автопереход фокуса
+    const nextCol = col === 0 ? 1 : 0;
+    const nextRow = col === 0 ? row : row + 1;
+
+    if (nextRow < 6) {
+      const nextInput = document.querySelector(`input[data-row="${nextRow}"][data-col="${nextCol}"]`);
+      if (nextInput) nextInput.focus();
+    }
+  }
 }
 
 function calculate() {
@@ -265,5 +278,6 @@ document.getElementById("clearButton").addEventListener("click", () => {
 });
 
 buildInputs();
+
 
 
