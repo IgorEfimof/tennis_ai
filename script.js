@@ -1,3 +1,5 @@
+// Полный обновлённый JS-файл с логикой AI анализа
+
 const coefficients = Array.from({ length: 6 }, () => ["", ""]);
 const weights = [0.6, 0.8, 1.0, 1.2, 1.3, 1.5];
 
@@ -76,7 +78,6 @@ function onInput(e) {
   calculate();
 
   if (value.length >= 3) {
-    // Автопереход фокуса
     const nextCol = col === 0 ? 1 : 0;
     const nextRow = col === 0 ? row : row + 1;
 
@@ -112,9 +113,9 @@ function calculate() {
   const p2 = total ? (avg2 / total) * 21 : 0;
   smallestPointsElem.textContent = `Очки более слабого игрока: ${Math.min(p1, p2).toFixed(2)}`;
 
-  detectKeyMoments();
   applyAIScoring(avg1, avg2);
   calculateConfidence(avg1, avg2);
+  detectKeyMoments();
   renderChart();
   smartInsights();
 }
@@ -141,49 +142,26 @@ function calculateConfidence(avg1, avg2) {
 }
 
 function detectKeyMoments() {
-  let comebacks = 0, losses = 0, switches = 0;
-  let prevLeader = null;
+  const confidenceText = confidenceElem.textContent;
+  const winnerText = winnerElem.textContent;
 
-  for (let i = 1; i < 6; i++) {
-    const p1 = parseFloat(coefficients[i - 1][0]) || 0;
-    const p2 = parseFloat(coefficients[i - 1][1]) || 0;
-    const c1 = parseFloat(coefficients[i][0]) || 0;
-    const c2 = parseFloat(coefficients[i][1]) || 0;
+  const confidenceMatch = confidenceText.match(/(\d+)%/);
+  const winnerMatch = winnerText.match(/Игрок (\d)/);
 
-    const diffPrev = p1 - p2;
-    const diffCurr = c1 - c2;
-    const currLeader = diffCurr < 0 ? 2 : diffCurr > 0 ? 1 : 0;
-
-    if (prevLeader !== null && currLeader !== 0 && prevLeader !== currLeader) switches++;
-    if (currLeader !== 0) prevLeader = currLeader;
-
-    let msg = "";
-    if (Math.abs(diffPrev) > 0.2 && diffPrev * diffCurr < 0) {
-      msg = diffCurr > 0 ? "Игрок 1 делает камбэк!" : "Игрок 2 делает камбэк!";
-      comebacks++;
-    } else if (Math.abs(c1 - p1) > 0.4 || Math.abs(c2 - p2) > 0.4) {
-      msg = c1 > p1 ? "Игрок 1 теряет преимущество!" : "Игрок 2 теряет преимущество!";
-      losses++;
-    }
-
-    const comment = document.getElementById(`comment-${i}`);
-    if (msg) {
-      comment.textContent = msg;
-      comment.style.display = "block";
-    } else {
-      comment.style.display = "none";
-    }
+  if (!confidenceMatch || !winnerMatch) {
+    aiConclusionElem.textContent = "Недостаточно данных для анализа.";
+    return;
   }
 
-  momentSummaryElem.textContent = `Камбэков: ${comebacks}, Потерь преимущества: ${losses}, Смен лидерства: ${switches}`;
+  const confidence = parseInt(confidenceMatch[1], 10);
+  const winner = parseInt(winnerMatch[1], 10);
 
-  if (switches >= 2) {
-    aiConclusionElem.textContent = "Игра непредсказуема: частые переходы инициативы.";
-  } else if (comebacks > 0) {
-    aiConclusionElem.textContent = "Наблюдаются камбэки — игроки борются за инициативу.";
-  } else {
-    aiConclusionElem.textContent = "Игра сбалансирована, победитель неочевиден.";
-  }
+  const remaining = 100 - confidence;
+  const altPlayer = winner === 1 ? 2 : 1;
+  const adjusted = remaining - confidence;
+
+  aiConclusionElem.textContent = `AI анализ: Игрок ${altPlayer} может победить с вероятностью ${adjusted > 0 ? adjusted : 0}%`;
+  momentSummaryElem.textContent = "";
 }
 
 function applyAIScoring(avg1, avg2) {
@@ -278,6 +256,3 @@ document.getElementById("clearButton").addEventListener("click", () => {
 });
 
 buildInputs();
-
-
-
