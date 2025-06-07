@@ -1,7 +1,7 @@
+// Обновлённый файл script.js с учётом направлений изменения коэффициентов
+
 const coefficients = Array.from({ length: 6 }, () => ["", ""]);
 const weights = [0.6, 0.8, 1.0, 1.2, 1.3, 1.5];
-
-let focusedIndex = 0;
 
 const average1Elem = document.getElementById("average1");
 const average2Elem = document.getElementById("average2");
@@ -73,10 +73,8 @@ function onInput(e) {
     if (value.length >= 4 && nextIndex < 12) {
         const nextInput = document.querySelector(`input[data-row="${Math.floor(nextIndex / 2)}"][data-col="${nextIndex % 2}"]`);
         if (nextInput) nextInput.focus();
-    } else if (nextIndex >= 12) {
-        if (value.length === 4) {
-            e.target.blur();
-        }
+    } else if (nextIndex >= 12 && value.length === 4) {
+        e.target.blur();
     }
 
     calculate();
@@ -120,6 +118,26 @@ function getVolatility(playerIndex) {
         volatility += Math.abs(curr - prev);
     }
     return volatility / 5;
+}
+
+function getDirectionStrength(playerIndex) {
+    let totalMovement = 0;
+    let upward = 0;
+    let downward = 0;
+
+    for (let i = 1; i < 6; i++) {
+        const prev = parseFloat(coefficients[i - 1][playerIndex]) || 0;
+        const curr = parseFloat(coefficients[i][playerIndex]) || 0;
+        const delta = curr - prev;
+        totalMovement += Math.abs(delta);
+        if (delta > 0) upward += delta;
+        else downward += -delta;
+    }
+
+    return {
+        volatility: totalMovement / 5,
+        netDirection: downward - upward
+    };
 }
 
 function calculateConfidence(avg1, avg2) {
@@ -176,9 +194,9 @@ function detectKeyMoments() {
             msg = diffCurr > 0 ? "Игрок 1 делает камбэк!" : "Игрок 2 делает камбэк!";
             comebacks++;
         } else if (Math.abs(curr1 - prev1) > 0.4 || Math.abs(curr2 - prev2) > 0.4) {
-    msg = curr1 > prev1 ? "Игрок 1 теряет преимущество!" : "Игрок 2 теряет преимущество!";
-    losses++;
-}
+            msg = curr1 > prev1 ? "Игрок 1 теряет преимущество!" : "Игрок 2 теряет преимущество!";
+            losses++;
+        }
 
         const comment = document.getElementById(`comment-${i}`);
         if (msg) {
@@ -211,8 +229,11 @@ function applyAIScoring(avg1, avg2) {
         trend2 += (parseFloat(coefficients[i - 1][1]) || 0) - (parseFloat(coefficients[i][1]) || 0);
     }
 
-    const score1 = avg1 * 0.5 + trend1 * 0.3 + delta1 * 0.2;
-    const score2 = avg2 * 0.5 + trend2 * 0.3 + delta2 * 0.2;
+    const dir1 = getDirectionStrength(0);
+    const dir2 = getDirectionStrength(1);
+
+    const score1 = avg1 * 0.4 + trend1 * 0.2 + delta1 * 0.1 + dir1.netDirection * 0.3;
+    const score2 = avg2 * 0.4 + trend2 * 0.2 + delta2 * 0.1 + dir2.netDirection * 0.3;
 
     if (score1 > score2) {
         winnerElem.textContent = "Победитель: Игрок 1";
@@ -235,3 +256,4 @@ document.getElementById("clearButton").addEventListener("click", () => {
 });
 
 buildInputs();
+
