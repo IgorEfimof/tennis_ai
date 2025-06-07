@@ -3,12 +3,75 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Game Analyzer</title>
+  <title>AI Анализ матча</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 1rem;
+      background: #f9f9f9;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: auto !important;
+    }
+
+    .stats, .inputs {
+      margin-bottom: 1rem;
+    }
+
+    .input-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    input {
+      width: 45%;
+      padding: 0.4rem;
+      font-size: 1rem;
+    }
+
+    .comment {
+      font-size: 0.85rem;
+      color: #444;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .ai-summary, .ai-analysis {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .ai-analysis strong {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h1>Анализ игры</h1>
+
     <div class="stats">
       <div id="average1">Средний кф. Игрок 1: 0.00</div>
       <div id="average2">Средний кф. Игрок 2: 0.00</div>
@@ -16,11 +79,6 @@
       <div id="confidence">Уверенность прогноза: 0%</div>
       <div id="totalPrediction" class="prediction">Рекомендуется ТБ 20.5</div>
       <div id="smallestPoints">Очки более слабого игрока: 0.00</div>
-      <div class="ai-summary">
-        <strong>AI Анализ:</strong>
-        <div id="momentSummary">Камбэков: 0, Потерь преимущества: 0, Смен лидерства: 0</div>
-        <div id="aiConclusion">Игра сбалансирована, победитель неочевиден.</div>
-      </div>
     </div>
 
     <div class="inputs">
@@ -29,10 +87,26 @@
     </div>
 
     <button id="clearButton">Очистить данные</button>
+
+    <div class="ai-summary">
+      <strong>AI Анализ:</strong>
+      <div id="momentSummary">Камбэков: 0, Потерь преимущества: 0, Смен лидерства: 0</div>
+      <div id="aiConclusion">Игра сбалансирована, победитель неочевиден.</div>
+    </div>
+
+    <div class="ai-analysis">
+      <strong>Интеллектуальная аналитика:</strong>
+      <div id="volatilityAnalysis"></div>
+      <div id="peakAnalysis"></div>
+      <div id="trendAnalysis"></div>
+    </div>
+
+    <canvas id="coeffChart"></canvas>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
