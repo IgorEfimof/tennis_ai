@@ -3,110 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Анализ матча</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>AI Анализ Игры</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 1rem;
-      background: #f9f9f9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      background-color: #0f0f0f;
+      color: #fff;
     }
-
+    h1 {
+      text-align: center;
+      font-size: 1.5rem;
+      margin: 1rem 0;
+    }
     .container {
-      max-width: 600px;
-      margin: auto;
+      max-width: 360px;
+      margin: 0 auto;
+      padding: 1rem;
     }
-
-    canvas {
-      width: 100% !important;
-      height: auto !important;
-    }
-
-    .stats, .inputs {
+    .result-box {
+      background: #1c1c1c;
+      border-radius: 12px;
+      padding: 1rem;
       margin-bottom: 1rem;
+      font-size: 0.9rem;
     }
-
+    .result-box span {
+      display: block;
+      margin: 0.3rem 0;
+    }
+    .prediction {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+    }
+    .green {
+      color: #4caf50;
+    }
+    .red {
+      color: #f44336;
+    }
+    .input-section {
+      background: #1c1c1c;
+      padding: 1rem;
+      border-radius: 12px;
+    }
     .input-row {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       margin-bottom: 0.5rem;
     }
-
-    input {
-      width: 45%;
-      padding: 0.4rem;
-      font-size: 1rem;
+    .input-row label {
+      flex: 1;
+      font-size: 0.9rem;
+      color: #bbb;
+      text-align: center;
     }
-
+    .input-wrapper input {
+      width: 40%;
+      padding: 0.3rem;
+      font-size: 1rem;
+      text-align: center;
+      border: none;
+      border-bottom: 2px solid #555;
+      background: #2a2a2a;
+      color: #fff;
+      border-radius: 6px;
+    }
+    .input-wrapper input:focus {
+      outline: none;
+      border-color: #f44336;
+    }
     .comment {
-      font-size: 0.85rem;
-      color: #444;
+      font-size: 0.75rem;
+      background: #444;
+      color: #f1f1f1;
+      padding: 0.4rem 0.6rem;
+      margin-top: -0.3rem;
+      border-radius: 6px;
     }
-
-    button {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      background: #007bff;
+    .button-clear {
+      margin-top: 1rem;
+      background-color: #f44336;
       color: #fff;
       border: none;
-      border-radius: 4px;
+      border-radius: 12px;
+      padding: 0.8rem;
+      width: 100%;
+      font-size: 1rem;
     }
-
-    .ai-summary, .ai-analysis {
-      background: #fff;
-      padding: 1rem;
-      border-radius: 6px;
-      margin-top: 1rem;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-
-    .ai-analysis strong {
-      display: block;
-      margin-bottom: 0.5rem;
+    .button-clear:active {
+      background-color: #d32f2f;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Анализ игры</h1>
-
-    <div class="stats">
-      <div id="average1">Средний кф. Игрок 1: 0.00</div>
-      <div id="average2">Средний кф. Игрок 2: 0.00</div>
-      <div id="winner">Победитель: не определён</div>
-      <div id="confidence">Уверенность прогноза: 0%</div>
-      <div id="totalPrediction" class="prediction">Рекомендуется ТБ 20.5</div>
-      <div id="smallestPoints">Очки более слабого игрока: 0.00</div>
-    </div>
-
-    <div class="inputs">
-      <h4>Введите кф (5–10 гейм)</h4>
-      <div id="inputRows"></div>
-    </div>
-
-    <button id="clearButton">Очистить данные</button>
-
-    <div class="ai-summary">
+    <div class="result-box">
+      <span id="average1">Средний кф. Игрок 1: —</span>
+      <span id="average2">Средний кф. Игрок 2: —</span>
+      <span id="winner">Победитель: —</span>
+      <span id="confidence">Уверенность прогноза: —</span>
+      <span id="totalPrediction" class="prediction">—</span>
+      <span id="smallestPoints">Очки более слабого игрока: —</span>
+      <br />
       <strong>AI Анализ:</strong>
-      <div id="momentSummary">Камбэков: 0, Потерь преимущества: 0, Смен лидерства: 0</div>
-      <div id="aiConclusion">Игра сбалансирована, победитель неочевиден.</div>
+      <span id="momentSummary">—</span>
+      <span id="aiConclusion">—</span>
     </div>
 
-    <div class="ai-analysis">
-      <strong>Интеллектуальная аналитика:</strong>
-      <div id="volatilityAnalysis"></div>
-      <div id="peakAnalysis"></div>
-      <div id="trendAnalysis"></div>
+    <div class="input-section">
+      <p>Введите кф (5–10 гейм)</p>
+      <div id="inputRows"></div>
+      <button id="clearButton" class="button-clear">Очистить данные</button>
     </div>
-
-    <canvas id="coeffChart"></canvas>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
